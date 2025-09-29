@@ -1,0 +1,282 @@
+---
+globs: videotranslation.py,main.py
+alwaysApply: false
+---
+以下是video_translation的目的和实现细节，你可以参考：
+
+从0开始构建一个视频搬运程序，我已经设计了一部分，你可以阅读一下当前项目结构。
+
+常量参数设置：
+当前工作目录路径
+OUTPUT_DIR
+TEST_DIR
+LOGS_DIR
+BIN_DIR
+CACHE_DIR
+
+整个项目规则：
+使用pathlib路径拼接，基准目录项目根路径
+任何临时的文件存储在CACHE_DIR，程序运行结束时要清除
+
+
+实现一个VideoTranslation类，
+主函数是translation
+主函数传入一个mp4文件，这个文件既有声音也有视频，主函数的目的是视频翻译字幕后搬运，嵌入字幕方式可选为硬烧录字幕模式和软嵌入模式，默认使用软嵌入，使用方式：python main.py video_path --模式
+视频中的音轨分离使用separate_wav函数，剥离后音频提取成带时间戳的json字符使用whisper_detection函数，随后用LLM_translation函数对json进行中文翻译润色，srt_subtitle_handling函数把润色后的json处理成srt字幕文件,当软嵌入时，到这里主函数结束。
+当硬烧录字幕模式时，srt_subtitle_handling函数结束后，使用ffmpeg将字幕文件srt作为图片烧录到视频中。这一部分需要实现video_hardburn函数。
+
+最终translation函数将return一个处理的结果json包含以下字段：
+通用基础信息 GENERAL
+success: 布尔值，表示处理是否成功
+message: 字符串，处理结果的文字描述（如 "翻译成功" 或具体错误信息）
+processingTime: 数值，处理总耗时（秒）
+inputFile: 字符串，输入的 MP4 文件名 / 路径
+音频处理相关 AUDIO_EXTRACT
+audioExtracted: 布尔值，表示是否成功分离出 WAV
+audioDuration: 数值，音频时长（秒）
+whisperHandled: 布尔值，表示whisper模型是否成功导入且成功地进行了语音识别。
+字幕相关 SUBTITLE_EXTRACT
+subtitleExtracted:布尔值，表示是否成功生产了srt字幕文件
+translatedSubtitlePath: （这个仅在outputMode=soft_subtitle时存在）字符串，翻译后的字幕文件路径
+subtitleLanguage: 对象，包含source（源语言）和target（目标语言）
+输出视频相关 VIDEO_HANDLE
+outputMode: 字符串，字幕模式（"hard_burned" 或 "soft_subtitle"）
+outputVideoPath: 字符串，处理后的视频文件路径（仅在hard_burned模式有）
+videoResolution: 字符串，视频分辨率（如 "1920x1080"）（仅在hard_burned模式有）
+错误信息（当 success 为 false 时）ERROR
+errorCode: 字符串，错误代码
+errorDetails: 字符串，详细错误信息
+
+errorCode位于config.py包含，各个函数的错误码必须仅使用这些CODE：
+ERROR_CODES = {
+    # 通用状态
+    "SUCCESS": "SUCCESS",
+    
+    # 音频相关
+    "AUDIO_EXTRACT_FAILED": "AUDIO_EXTRACT_FAILED",
+    "AUDIO_CONVERSION_FAILED": "AUDIO_CONVERSION_FAILED",
+    "AUDIO_EMPTY_ERROR": "AUDIO_EMPTY_ERROR",
+    
+    # Whisper相关
+    "WHISPER_MODEL_LOAD_FAILED": "WHISPER_MODEL_LOAD_FAILED",
+    "WHISPER_API_ERROR": "WHISPER_API_ERROR",
+    "WHISPER_TIMEOUT_ERROR": "WHISPER_TIMEOUT_ERROR",
+    
+    # LLM相关
+    "LLM_API_ERROR": "LLM_API_ERROR",
+    "LLM_ERROR": "LLM_ERROR",     #表示LLM输出格式不通过筛选
+    "LLM_TIMEOUT_ERROR": "LLM_TIMEOUT_ERROR",  
+    
+    # 字幕相关
+    "SUBTITLE_EXTRACT_FAILED": "SUBTITLE_EXTRACT_FAILED",
+    "SUBTITLE_EMPTY_ERROR": "SUBTITLE_EMPTY_ERROR",
+    "SRT_SAVE_FAILED": "SRT_SAVE_FAILED",
+    "SRT_PARSE_ERROR": "SRT_PARSE_ERROR",
+    
+    # 视频相关
+    "VIDEO_ENCODE_FAILED": "VIDEO_ENCODE_FAILED",
+    "VIDEO_DECODE_FAILED": "VIDEO_DECODE_FAILED",
+    "VIDEO_RESOLUTION_ERROR": "VIDEO_RESOLUTION_ERROR",
+    "FFMPEG_ERROR": "FFMPEG_ERROR",
+    
+    # 文件相关
+    "FILE_ERROR": "FILE_ERROR",  #例如某个文件过大、某个文件不存在、不受支持的文件格式等
+    "PERMISSION_DENIED": "PERMISSION_DENIED",  
+    
+    # 系统与网络相关
+    "NETWORK_ERROR": "NETWORK_ERROR",
+    "RESOURCE_LIMIT_ERROR": "RESOURCE_LIMIT_ERROR",
+    "DEPENDENCY_MISSING": "DEPENDENCY_MISSING",
+    "INVALID_INPUT_ERROR": "INVALID_INPUT_ERROR",
+    "CONCURRENCY_ERROR": "CONCURRENCY_ERROR"
+}
+
+
+实现一个separate_wav函数将mp4中的音轨剥离成wav文件，传入MP4文件路径。
+返回 Tuple[bool, Optional[np.ndarray], Optional[float], str, str]，对应：
+is_success：布尔值（是否成功分离）
+audio_path: 剥离的wav路径（默认存储在CACHE_DIR）
+audio_duration：音频时长（秒，成功则为数值，失败则为 None）
+error_code：错误码（成功则为 "SUCCESS"，失败则从errorcode中返回）
+error_detail：错误详情（成功则为空字符串，失败则为具体原因，如 “文件不存在”“音轨读取失败”）
+
+实现一个whisper_detection函数，传入剥离后的wav音频文件和return形式（默认json），
+返回 Tuple[bool, Optional[Dict], str, str]，对应：
+is_success：布尔值（是否成功识别）
+recognition_result：识别结果（成功则为 Whisper 格式的 JSON 字典，失败则为 None）
+error_code：错误码（成功则为 "SUCCESS"，失败则失败则从errorcode中返回）
+error_detail：错误详情（成功则为空字符串，失败则为具体原因）
+
+使用如下的whisper sdk对wav文件进行预测：
+# 1. 初始化 Whisper 语音识别管道
+# model：选择模型（large-v3 精度最高，tiny 最快）
+# task：transcribe（识别）或 translate（翻译，非英文转英文）
+# return_timestamps：True（句子级）或 "word"（单词级）
+from openai import OpenAI
+client = OpenAI(
+    base_url="https://api.uniapi.vip/v1", 
+    api_key="sk-6e7hQ3zBKFK8cQR_sE6231Vqkbk9ChDrar4W9SRX3RWgiKqrQ0kXxuxKiMQ" 
+)
+with open("audio.m4a", "rb") as audio_file:
+    response = client.audio.transcriptions.create(
+        model="whisper-1",
+        file=audio_file,
+        response_format="verbose_json",  # 关键参数：启用详细JSON输出（包含时间戳）
+        language="en"  # 可选：指定音频语言
+    )
+# 处理响应为字典格式
+        response_dict = response.model_dump()
+            
+            # 精简结果
+            simplified = {
+                "segments": []
+            }
+            
+            # 处理每个片段，保留必要字段并简化时间戳
+            for segment in response_dict.get("segments", []):
+                simplified_segment = {
+                    "start": round(segment.get("start", 0.0), 1),  # 保留一位小数
+                    "end": round(segment.get("end", 0.0), 1),
+                    "text": segment.get("text", "").strip()  # 去除首尾空格
+                }
+                simplified["segments"].append(simplified_segment)
+            
+            return (True, simplified, "SUCCESS", "")
+
+
+这段sdk的返回结果response将会是：
+{
+  "task": "transcribe",
+  "language": "english",
+  "duration": 8.470000267028809,
+  "text": "The beach was a popular spot on a hot summer day. People were swimming in the ocean, building sandcastles, and playing beach volleyball.",   #总的音频翻译成完整的字符串
+  "segments": [    #每个segment是一个句子段的信息
+    {
+      "id": 0,
+      "seek": 0,
+      "start": 0.0,  #开始时间戳
+      "end": 3.319999933242798,  #结束时间戳（秒数）
+      "text": " The beach was a popular spot on a hot summer day.",  #每个句子段的字符串
+      "tokens": [
+        50364, 440, 7534, 390, 257, 3743, 4008, 322, 257, 2368, 4266, 786, 13, 50530
+      ],
+      "temperature": 0.0,
+      "avg_logprob": -0.2860786020755768,
+      "compression_ratio": 1.2363636493682861,
+      "no_speech_prob": 0.00985979475080967
+    },
+    ...
+  ],
+  "usage": {
+    "type": "duration",
+    "seconds": 9
+  }
+}
+随后精简处理为simplified_response并return:
+{
+  "segments": [
+    {
+      "start": 0.0,    （所有小数都是.1f，简化数据长度）
+      "end": 3.3,   #End time of the segment in seconds.
+      "text": " The beach was a popular spot on a hot summer day.",
+    },
+    ...
+}
+
+
+实现一个LLM_translation函数 , 将whisper_detection函数返回的simplified_response对象的segments完整地、在一轮对话session中传递给LLM大模型，
+传入参数：LLM种类str（默认指定qwen-plus）,whisper_detection返回的simplified_response对象
+返回 Tuple[bool, Optional[Dict], str, str]，对应：
+is_success：布尔值（是否成功翻译）
+translated_result：翻译结果（成功则为 Whisper 格式的 JSON 字典，text 为中文，失败则为 None）,格式与simplified_response一致。
+error_code：错误码（成功则为 "SUCCESS"，失败则失败则从errorcode中返回）
+error_detail：错误详情（成功则为空字符串，失败则为具体原因）
+
+具体代码：
+system_prompt = load_prompt_from_txt("LLM_prompt/toCN_prompt.txt")
+
+sentence_segment=xxxxxxx         #sentence_chunks从json对象中提取segments中每个segment的内容append进来，是一个列表。
+user_prompt = sentence_segment    # 列表，每个元素是一个句子段
+client = OpenAI(
+    api_key="sk-3e9a31f74e6744c98662a7df5e33ffb4"，
+    base_url="https://dashscope.aliyuncs.com/compatible-mode/v1",
+)
+completion = client.chat.completions.create(
+    # 模型列表：https://help.aliyun.com/zh/model-studio/getting-started/models
+    model="qwen-plus",
+    messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": user_prompt},
+    ],
+    # Qwen3模型通过enable_thinking参数控制思考过程（开源版默认True，商业版默认False）,要关掉思考模式
+    # 使用Qwen3开源版模型时，若未启用流式输出，请将下行取消注释，否则会报错
+    # extra_body={"enable_thinking": False},
+)
+print(completion.model_dump_json())
+
+随后要设计一个筛查函数，如果不通过则返回错误码LLM_ERROR: 代表不过筛的output。
+simplified_response:
+{
+  "segments": [
+    {
+      "start": 0.0,    （所有小数都是.1f，简化数据长度）
+      "end": 3.3,   #End time of the segment in seconds.
+      "text": " The beach was a popular spot on a hot summer day.",
+    },
+    ...
+}
+传出参数的格式必须也是：
+{
+  "segments": [
+    {
+      "start": 0.0,    （所有小数都是.1f，简化数据长度）
+      "end": 3.3,   #End time of the segment in seconds.
+      "text": "炎炎夏日沙滩是个热门地点", 
+    },
+    ...
+}
+筛查逻辑：
+要保证输出json的结构格式，要保证有segments字段，要保证每个segment必须有start和end，要保证输入的simplified_response的segments长度必须和输出的segments长度相等
+要保证simplified_response的segments的每个segment（start,end）必须和输出的segments的（start,end）相等。
+
+
+实现一个srt_subtitle_handling函数，将 LLM 翻译后的 Whisper JSON 结果转换为标准 SRT 文件，保存到指定路径，返回生成状态与路径。
+传入参数：whisper_detection函数翻译完的whisper格式的中文json对象、srt保存路径（默认当前工作目录下的output文件夹）
+返回 Tuple[bool, Optional[str], str, str]，对应：
+is_success：布尔值（是否成功生成 SRT）
+srt_save_path：SRT 文件路径（成功则为绝对路径，失败则为 None）
+error_code：错误码（成功则为 "SUCCESS"，失败则从errorcode中返回）
+error_detail：错误详情（成功则为空字符串，失败则为具体原因）
+
+实现一个video_hardburn函数，此函数仅用于outputMode=hardburned时使用ffmpeg将srt_subtitle_handling返回的srt字幕文件烧录（硬嵌入）至视频源文件中并生成新的视频文件
+输入
+input_video_path 	str	待嵌入字幕的原始 MP4 视频路径（绝对路径 / 相对路径）
+srt_file_path	str	srt_subtitle_handling  返回的 SRT 字幕文件路径
+output_video_dir	str	输出视频的保存目录，默认output文件夹
+output_video_name	str/None	输出视频文件名（不含后缀），None 时自动生成
+subtitle_style	dict/None	字幕样式配置（可选），None 时使用 FFmpeg 默认样式
+返回 Tuple[bool, Optional[str], Optional[str], str, str]，
+bool	is_success：硬烧录是否成功	成功为 True，失败为 False
+str/None	output_video_path：输出视频的绝对路径
+str/None	video_resolution：输出视频分辨率（如 "1920x1080"）	成功为视频宽高字符串（从输入视频流解析，确保与原视频一致），失败为 None
+str	error_code：错误码	成功为 "SUCCESS"；失败时需分类："FFMPEG_ERROR"（FFmpeg 错误，包括ffmpeg不存在、ffmpeg烧录过程报错等）、FILE_ERROR"（文件读取问题或 mp4文件有问题）、"PERMISSION_DENIED"（输出目录无权限）
+str	error_detail：错误详情	成功为空字符串；失败时需包含关键信息
+
+
+日志logger.py文件实现一个日志记录器，采用标准的日志级别（DEBUG, INFO, WARNING, ERROR, CRITICAL），包括：DEBUG：详细的调试信息，包括函数参数和返回值
+INFO：关键流程节点和状态变更
+ERROR：错误信息和异常详情
+同时输出到控制台和文件
+控制台：只显示 INFO 及以上级别，保持界面简洁
+文件：记录所有级别日志，包括详细调试信息，按日期和大小滚动
+为视频处理流程中的关键步骤提供专用日志函数，包括：
+音频提取日志
+Whisper 语音识别日志
+LLM 翻译日志
+字幕生成日志
+视频处理日志
+整体翻译任务总结日志
+提供log_function_call装饰器，自动记录函数的调用、参数、返回值和异常，减少重复代码，异常处理：详细记录异常堆栈信息，便于问题定位。对不同归类的日志级别使用不同的颜色
+
+在test目录中实现test_whisper_detection.py，传入一个视频mp4，根据上述我的逻辑用whisper预测出segments，结果打印成simplified_response记得换行，最后 保存为whisper_detection_output.json，便于我调试这个函数。
+实现一个test_LLM_translation.py，传入一个json文件即simplified_response的json文件，用我所说的LLM_translation去翻译并返回json，随后将LLM_translation_output.json返回，同时终端打印出whisper_detection_output.json和LLM_translation_output.json的比对。
