@@ -1,0 +1,5 @@
+ffmpeg-python==0.2.0
+numpy>=1.21.0
+openai>=1.0.0
+aiofiles>=23.0.0
+pydub>=0.25.1
