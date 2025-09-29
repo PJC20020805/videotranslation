@@ -1,0 +1,26 @@
+2025-09-29 10:50:27 - VideoTranslation - INFO - 日志系统初始化完成，日志文件: /root/video-translation/logs/video_translation_20250929_105027.log
+2025-09-29 10:50:27 - VideoTranslation - INFO - 日志级别已设置为: INFO
+2025-09-29 10:50:27 - VideoTranslation - INFO - 视频翻译系统启动
+2025-09-29 10:50:27 - VideoTranslation - INFO - 命令行参数: {'video_path': 'video_test_2min.mp4', 'output_mode': 'soft_subtitle', 'output_dir': None, 'log_level': 'INFO', 'no_cleanup': False}
+2025-09-29 10:50:27 - VideoTranslation - INFO - 初始化视频翻译器...
+2025-09-29 10:50:27 - VideoTranslation - INFO - VideoTranslation 初始化完成
+2025-09-29 10:50:27 - VideoTranslation - INFO - 开始视频翻译处理...
+2025-09-29 10:50:27 - VideoTranslation - INFO - 开始视频翻译任务: video_test_2min.mp4 (模式: soft_subtitle)
+2025-09-29 10:50:27 - VideoTranslation - INFO - 步骤1: 开始音频分离...
+2025-09-29 10:50:27 - VideoTranslation - INFO - 开始音频分离: video_test_2min.mp4 -> /root/video-translation/cache/audio_20250929_105027.wav
+2025-09-29 10:50:28 - VideoTranslation - INFO - 🎵 音频提取成功: video_test_2min.mp4 -> 时长: 120.02秒
+2025-09-29 10:50:28 - VideoTranslation - INFO - 步骤2: 开始语音识别...
+2025-09-29 10:50:28 - VideoTranslation - INFO - 开始语音识别: /root/video-translation/cache/audio_20250929_105027.wav
+2025-09-29 10:50:40 - VideoTranslation - INFO - 🎤 语音识别成功: /root/video-translation/cache/audio_20250929_105027.wav -> 识别到 17 个语音段
+2025-09-29 10:50:40 - VideoTranslation - INFO - 步骤3: 开始LLM翻译...
+2025-09-29 10:50:40 - VideoTranslation - INFO - 开始LLM翻译: 模型=qwen-plus, 语音段数量=17
+2025-09-29 10:51:18 - VideoTranslation - INFO - 🧠 LLM翻译成功: 模型=qwen-plus -> 翻译了 17 个语音段
+2025-09-29 10:51:18 - VideoTranslation - INFO - 步骤4: 开始生成SRT字幕...
+2025-09-29 10:51:18 - VideoTranslation - INFO - 开始生成SRT字幕: 17个字幕段 -> /root/video-translation/output/subtitles/subtitle_20250929_105118.srt
+2025-09-29 10:51:18 - VideoTranslation - INFO - 📝 字幕生成成功: /root/video-translation/output/subtitles/subtitle_20250929_105118.srt -> 包含 17 个字幕段
+2025-09-29 10:51:18 - VideoTranslation - INFO - 软嵌入模式完成: /root/video-translation/output/subtitles/subtitle_20250929_105118.srt
+2025-09-29 10:51:18 - VideoTranslation - INFO - ✅ 翻译任务完成: video_test_2min.mp4 | 耗时: 50.17秒 | 模式: soft_subtitle
+2025-09-29 10:51:18 - VideoTranslation - INFO - 开始清理缓存文件...
+2025-09-29 10:51:18 - VideoTranslation - INFO - 缓存清理完成: 清理了 1 个文件，释放 3.66MB 空间
+2025-09-29 10:51:18 - VideoTranslation - INFO - 处理结果已保存到: /root/video-translation/output/result_video_test_2min.json
+2025-09-29 10:51:18 - VideoTranslation - INFO - 视频翻译任务完成

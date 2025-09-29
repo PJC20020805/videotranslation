@@ -1,5 +1,60 @@
-ffmpeg-python==0.2.0
-numpy>=1.21.0
+# 视频翻译系统依赖包
+# Video Translation System Dependencies
+
+# OpenAI API客户端 - 用于Whisper语音识别和LLM调用
 openai>=1.0.0
-aiofiles>=23.0.0
-pydub>=0.25.1
+
+# 路径处理 (Python 3.4+ 内置pathlib，但为了兼容性)
+pathlib2>=2.3.7; python_version<"3.4"
+
+# JSON处理 (Python内置，无需额外安装)
+# json
+
+# 正则表达式 (Python内置，无需额外安装)  
+# re
+
+# 时间处理 (Python内置，无需额外安装)
+# datetime
+# time
+
+# 子进程调用 (Python内置，无需额外安装)
+# subprocess
+
+# 日志处理 (Python内置，无需额外安装)
+# logging
+
+# 命令行参数解析 (Python内置，无需额外安装)
+# argparse
+
+# 系统相关 (Python内置，无需额外安装)
+# sys
+# os
+
+# 函数装饰器 (Python内置，无需额外安装)
+# functools
+
+# 类型提示 (Python 3.5+ 内置)
+# typing
+
+# HTTP状态码 (Python内置，无需额外安装)
+# http
+
+# 请求库 (如果需要下载测试文件)
+requests>=2.25.0
+
+# 注意事项:
+# 1. 本项目主要依赖Python标准库和OpenAI客户端
+# 2. 需要系统安装FFmpeg用于音视频处理
+# 3. 需要网络连接访问Whisper API和阿里云百炼API
+# 4. Python版本要求: 3.7+
+
+# 系统依赖 (需要手动安装):
+# - FFmpeg: 用于音视频处理
+#   Ubuntu/Debian: sudo apt install ffmpeg
+#   CentOS/RHEL: sudo yum install ffmpeg
+#   macOS: brew install ffmpeg
+#   Windows: 下载FFmpeg并添加到PATH
+
+# API密钥配置 (已在config.py中硬编码):
+# - Whisper API Key: sk-6e7hQ3zBKFK8cQR_sE6231Vqkbk9ChDrar4W9SRX3RWgiKqrQ0kXxuxKiMQ
+# - 阿里云百炼 API Key: sk-3e9a31f74e6744c98662a7df5e33ffb4

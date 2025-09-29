@@ -1,0 +1,140 @@
+2025-09-29 11:07:26 - VideoTranslation - INFO - 日志系统初始化完成，日志文件: /root/video-translation/logs/video_translation_20250929_110726.log
+2025-09-29 11:07:26 - VideoTranslation - INFO - 日志级别已设置为: DEBUG
+2025-09-29 11:07:26 - VideoTranslation - INFO - 视频翻译系统启动
+2025-09-29 11:07:26 - VideoTranslation - INFO - 命令行参数: {'video_path': 'video_test_2min.mp4', 'output_mode': 'hard_burned', 'output_dir': None, 'log_level': 'DEBUG', 'no_cleanup': False}
+2025-09-29 11:07:26 - VideoTranslation - INFO - 初始化视频翻译器...
+2025-09-29 11:07:26 - VideoTranslation - INFO - VideoTranslation 初始化完成
+2025-09-29 11:07:26 - VideoTranslation - INFO - 开始视频翻译处理...
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 🔄 调用函数: translation
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 📥 参数: args=(<video_translator.VideoTranslation object at 0x7f8f7a3bfd00>,), kwargs={'mp4_file_path': 'video_test_2min.mp4', 'output_mode': 'hard_burned'}
+2025-09-29 11:07:26 - VideoTranslation - INFO - 开始视频翻译任务: video_test_2min.mp4 (模式: hard_burned)
+2025-09-29 11:07:26 - VideoTranslation - INFO - 步骤1: 开始音频分离...
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 🔄 调用函数: separate_wav
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 📥 参数: args=('video_test_2min.mp4',), kwargs={}
+2025-09-29 11:07:26 - VideoTranslation - INFO - 开始音频分离: video_test_2min.mp4 -> /root/video-translation/cache/audio_20250929_110726.wav
+2025-09-29 11:07:26 - VideoTranslation - INFO - 🎵 音频提取成功: video_test_2min.mp4 -> 时长: 120.02秒
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - ✅ 函数 separate_wav 执行成功，耗时: 0.145秒
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 📤 返回值: (True, '/root/video-translation/cache/audio_20250929_110726.wav', 120.023938, 'SUCCESS', '')
+2025-09-29 11:07:26 - VideoTranslation - INFO - 步骤2: 开始语音识别...
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 🔄 调用函数: whisper_detection
+2025-09-29 11:07:26 - VideoTranslation - DEBUG - 📥 参数: args=('/root/video-translation/cache/audio_20250929_110726.wav',), kwargs={}
+2025-09-29 11:07:26 - VideoTranslation - INFO - 开始语音识别: /root/video-translation/cache/audio_20250929_110726.wav
+2025-09-29 11:07:38 - VideoTranslation - INFO - 🎤 语音识别成功: /root/video-translation/cache/audio_20250929_110726.wav -> 识别到 17 个语音段
+2025-09-29 11:07:38 - VideoTranslation - DEBUG - ✅ 函数 whisper_detection 执行成功，耗时: 12.339秒
+2025-09-29 11:07:38 - VideoTranslation - DEBUG - 📤 返回值: (True, {'segments': [{'start': 0.0, 'end': 9.0, 'text': 'Antonio Ezequiel Cárdenas Guillén, known as Tony Tormenta, had taken over leadership of the Gulf cartel after his brother OCL was arrested.'}, {'start': 9.0, 'end': 16.0, 'text': "But at the same time, Los Cetas, once the cartel's armed wing, had broken away and turned into its deadliest enemy."}, {'start': 16.0, 'end': 26.0, 'text': 'Tony commanded his own private army called Los Escorpiones, a squad made up of ex-police officers trained in heavy weapons and brutal tactics, so brutal that he caught the attention of the Mexican Marines.'}, {'start': 26.0, 'end': 34.0, 'text': 'For months they tracked him across Tamaulipas, nearly catching him several times, but each time he escaped, protected by convoys of gunmen and armored vehicles.'}, {'start': 34.0, 'end': 42.0, 'text': 'By late 2010, however, the government made his capture a top priority, and Matamoros, his home city and stronghold, became the main battlefield.'}, {'start': 42.0, 'end': 50.0, 'text': 'On the morning of November 5, 2010, more than 660 Marines, backed by helicopters and armored vehicles, surrounded downtown Matamoros.'}, {'start': 51.0, 'end': 59.0, 'text': 'Roadblocks went up, cell service was cut, and power went out in parts of the city. For hours, residents hid in fear as gunmen fought openly in the streets.'}, {'start': 59.0, 'end': 67.0, 'text': 'Gulf cartel Sicarios hijacked buses to block military convoys, snipers fired from rooftops, and over 300 grenades exploded during the clashes.'}, {'start': 67.0, 'end': 74.0, 'text': 'By the afternoon, the Marines had located Tony in a downtown building. Helicopters fired from above, and the military pushed through.'}, {'start': 74.0, 'end': 83.0, 'text': 'As they got in, they eliminated Tony and several of his bodyguards. Across Tamaulipas and beyond, new roadblocks, grenade attacks, and shootouts erupted as news of his death spread.'}, {'start': 83.0, 'end': 89.0, 'text': "Los Zetas celebrated, hanging banners mocking the Gulf cartel, and inviting Tony's men to switch sides."}, {'start': 89.0, 'end': 90.0, 'text': 'El Mexicano'}, {'start': 90.0, 'end': 98.0, 'text': 'By 1989, Gonzalo Rodriguez Gacha, also known as El Mexicano, was one of the most feared leaders of the Medellin cartel.'}, {'start': 98.0, 'end': 107.0, 'text': 'But by then, he had gone to war with almost everyone. The Colombian government, the DEA, the Cali cartel, FARC guerrillas, and even old allies in the emerald trade.'}, {'start': 107.0, 'end': 111.0, 'text': 'His empire was falling apart, and his enemies had started working together to bring him down.'}, {'start': 111.0, 'end': 117.0, 'text': 'The final hunt began when a police informant, secretly working for the Cali cartel, revealed his location.'}, {'start': 117.0, 'end': 120.0, 'text': 'The police traced him to Cartagena, but he slipped away by boat to Tuxtla.'}]}, 'SUCCESS', '')
+2025-09-29 11:07:38 - VideoTranslation - INFO - 步骤3: 开始LLM翻译...
+2025-09-29 11:07:38 - VideoTranslation - DEBUG - 🔄 调用函数: LLM_translation
+2025-09-29 11:07:38 - VideoTranslation - DEBUG - 📥 参数: args=('qwen-plus', {'segments': [{'start': 0.0, 'end': 9.0, 'text': 'Antonio Ezequiel Cárdenas Guillén, known as Tony Tormenta, had taken over leadership of the Gulf cartel after his brother OCL was arrested.'}, {'start': 9.0, 'end': 16.0, 'text': "But at the same time, Los Cetas, once the cartel's armed wing, had broken away and turned into its deadliest enemy."}, {'start': 16.0, 'end': 26.0, 'text': 'Tony commanded his own private army called Los Escorpiones, a squad made up of ex-police officers trained in heavy weapons and brutal tactics, so brutal that he caught the attention of the Mexican Marines.'}, {'start': 26.0, 'end': 34.0, 'text': 'For months they tracked him across Tamaulipas, nearly catching him several times, but each time he escaped, protected by convoys of gunmen and armored vehicles.'}, {'start': 34.0, 'end': 42.0, 'text': 'By late 2010, however, the government made his capture a top priority, and Matamoros, his home city and stronghold, became the main battlefield.'}, {'start': 42.0, 'end': 50.0, 'text': 'On the morning of November 5, 2010, more than 660 Marines, backed by helicopters and armored vehicles, surrounded downtown Matamoros.'}, {'start': 51.0, 'end': 59.0, 'text': 'Roadblocks went up, cell service was cut, and power went out in parts of the city. For hours, residents hid in fear as gunmen fought openly in the streets.'}, {'start': 59.0, 'end': 67.0, 'text': 'Gulf cartel Sicarios hijacked buses to block military convoys, snipers fired from rooftops, and over 300 grenades exploded during the clashes.'}, {'start': 67.0, 'end': 74.0, 'text': 'By the afternoon, the Marines had located Tony in a downtown building. Helicopters fired from above, and the military pushed through.'}, {'start': 74.0, 'end': 83.0, 'text': 'As they got in, they eliminated Tony and several of his bodyguards. Across Tamaulipas and beyond, new roadblocks, grenade attacks, and shootouts erupted as news of his death spread.'}, {'start': 83.0, 'end': 89.0, 'text': "Los Zetas celebrated, hanging banners mocking the Gulf cartel, and inviting Tony's men to switch sides."}, {'start': 89.0, 'end': 90.0, 'text': 'El Mexicano'}, {'start': 90.0, 'end': 98.0, 'text': 'By 1989, Gonzalo Rodriguez Gacha, also known as El Mexicano, was one of the most feared leaders of the Medellin cartel.'}, {'start': 98.0, 'end': 107.0, 'text': 'But by then, he had gone to war with almost everyone. The Colombian government, the DEA, the Cali cartel, FARC guerrillas, and even old allies in the emerald trade.'}, {'start': 107.0, 'end': 111.0, 'text': 'His empire was falling apart, and his enemies had started working together to bring him down.'}, {'start': 111.0, 'end': 117.0, 'text': 'The final hunt began when a police informant, secretly working for the Cali cartel, revealed his location.'}, {'start': 117.0, 'end': 120.0, 'text': 'The police traced him to Cartagena, but he slipped away by boat to Tuxtla.'}]}), kwargs={}
+2025-09-29 11:07:38 - VideoTranslation - INFO - 开始LLM翻译: 模型=qwen-plus, 语音段数量=17
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - LLM原始响应: {
+    "start": 0.0,
+    "end": 9.0,
+    "text": "安东尼奥·埃泽基尔·卡德纳斯·吉伦，外号“风暴托尼”，在他兄弟OCL被捕后接管了海湾贩毒集团的领导权。"
+},
+{
+    "start": 9.0,
+    "end": 16.0,
+    "text": "但与此同时，曾经是该贩毒集团武装力量的Los Zetas（洛斯塞塔斯）已脱离组织，转而成为其最致命的敌人。"
+},
+{
+    "start": 16.0,
+    "end": 26.0,
+    "text": "托尼拥有自己的私人军队‘Los Escorpiones’（蝎子部队），这支队伍由前警察组成，接受过重武器和残酷战术训练，手段之凶残引起了墨西哥海军陆战队的注意。"
+},
+{
+    "start": 26.0,
+    "end": 34.0,
+    "text": "数月来，军方在塔毛利帕斯州对他展开追捕，曾多次几乎将他抓获，但他每次都借助武装车队和装甲车成功逃脱。"
+},
+{
+    "start": 34.0,
+    "end": 42.0,
+    "text": "然而到了2010年底，政府将其抓捕列为头等要务，他的家乡兼大本营马塔莫罗斯市成为主要战场。"
+},
+{
+    "start": 42.0,
+    "end": 50.0,
+    "text": "2010年11月5日清晨，超过660名海军陆战队员在直升机和装甲车支援下，包围了马塔莫罗斯市中心。"
+},
+{
+    "start": 51.0,
+    "end": 59.0,
+    "text": "道路被封锁，手机信号中断，城市部分地区停电。数小时内，居民因街头公然爆发的枪战而恐惧躲藏。"
+},
+{
+    "start": 59.0,
+    "end": 67.0,
+    "text": "海湾贩毒集团的杀手劫持公交车阻截军方车队，狙击手从屋顶开火，交火期间引爆了超过300枚手榴弹。"
+},
+{
+    "start": 67.0,
+    "end": 74.0,
+    "text": "到当天下午，海军陆战队已锁定托尼藏身的市中心建筑，直升机在上空火力压制，军队逐步推进。"
+},
+{
+    "start": 74.0,
+    "end": 83.0,
+    "text": "突入后，他们击毙了托尼及其多名保镖。随着他死亡的消息传出，塔毛利帕斯州及更广地区爆发新的路障、手榴弹袭击和枪战。"
+},
+{
+    "start": 83.0,
+    "end": 89.0,
+    "text": "洛斯塞塔斯公开庆祝，挂起嘲讽海湾贩毒集团的横幅，并邀请托尼的手下叛逃投靠。"
+},
+{
+    "start": 89.0,
+    "end": 90.0,
+    "text": "墨西哥人"
+},
+{
+    "start": 90.0,
+    "end": 98.0,
+    "text": "到1989年，冈萨洛·罗德里格斯·加查，绰号‘墨西哥人’，已成为麦德林贩毒集团中最令人畏惧的头目之一。"
+},
+{
+    "start": 98.0,
+    "end": 107.0,
+    "text": "但那时，他已经与几乎所有势力为敌：哥伦比亚政府、美国缉毒局、卡利贩毒集团、FARC游击队，甚至昔日翡翠贸易中的盟友。"
+},
+{
+    "start": 107.0,
+    "end": 111.0,
+    "text": "他的帝国正在瓦解，而他的敌人开始联手将他铲除。"
+},
+{
+    "start": 111.0,
+    "end": 117.0,
+    "text": "最终围剿始于一名警方线人——实为卡利集团秘密效力——泄露了他的藏身地点。"
+},
+{
+    "start": 117.0,
+    "end": 120.0,
+    "text": "警方追踪他至卡塔赫纳，但他乘船逃脱，抵达图斯特拉。"
+}
+2025-09-29 11:08:05 - VideoTranslation - INFO - 🧠 LLM翻译成功: 模型=qwen-plus -> 翻译了 17 个语音段
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - ✅ 函数 LLM_translation 执行成功，耗时: 26.796秒
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 📤 返回值: (True, {'segments': [{'start': 0.0, 'end': 9.0, 'text': '安东尼奥·埃泽基尔·卡德纳斯·吉伦，外号“风暴托尼”，在他兄弟OCL被捕后接管了海湾贩毒集团的领导权。'}, {'start': 9.0, 'end': 16.0, 'text': '但与此同时，曾经是该贩毒集团武装力量的Los Zetas（洛斯塞塔斯）已脱离组织，转而成为其最致命的敌人。'}, {'start': 16.0, 'end': 26.0, 'text': '托尼拥有自己的私人军队‘Los Escorpiones’（蝎子部队），这支队伍由前警察组成，接受过重武器和残酷战术训练，手段之凶残引起了墨西哥海军陆战队的注意。'}, {'start': 26.0, 'end': 34.0, 'text': '数月来，军方在塔毛利帕斯州对他展开追捕，曾多次几乎将他抓获，但他每次都借助武装车队和装甲车成功逃脱。'}, {'start': 34.0, 'end': 42.0, 'text': '然而到了2010年底，政府将其抓捕列为头等要务，他的家乡兼大本营马塔莫罗斯市成为主要战场。'}, {'start': 42.0, 'end': 50.0, 'text': '2010年11月5日清晨，超过660名海军陆战队员在直升机和装甲车支援下，包围了马塔莫罗斯市中心。'}, {'start': 51.0, 'end': 59.0, 'text': '道路被封锁，手机信号中断，城市部分地区停电。数小时内，居民因街头公然爆发的枪战而恐惧躲藏。'}, {'start': 59.0, 'end': 67.0, 'text': '海湾贩毒集团的杀手劫持公交车阻截军方车队，狙击手从屋顶开火，交火期间引爆了超过300枚手榴弹。'}, {'start': 67.0, 'end': 74.0, 'text': '到当天下午，海军陆战队已锁定托尼藏身的市中心建筑，直升机在上空火力压制，军队逐步推进。'}, {'start': 74.0, 'end': 83.0, 'text': '突入后，他们击毙了托尼及其多名保镖。随着他死亡的消息传出，塔毛利帕斯州及更广地区爆发新的路障、手榴弹袭击和枪战。'}, {'start': 83.0, 'end': 89.0, 'text': '洛斯塞塔斯公开庆祝，挂起嘲讽海湾贩毒集团的横幅，并邀请托尼的手下叛逃投靠。'}, {'start': 89.0, 'end': 90.0, 'text': '墨西哥人'}, {'start': 90.0, 'end': 98.0, 'text': '到1989年，冈萨洛·罗德里格斯·加查，绰号‘墨西哥人’，已成为麦德林贩毒集团中最令人畏惧的头目之一。'}, {'start': 98.0, 'end': 107.0, 'text': '但那时，他已经与几乎所有势力为敌：哥伦比亚政府、美国缉毒局、卡利贩毒集团、FARC游击队，甚至昔日翡翠贸易中的盟友。'}, {'start': 107.0, 'end': 111.0, 'text': '他的帝国正在瓦解，而他的敌人开始联手将他铲除。'}, {'start': 111.0, 'end': 117.0, 'text': '最终围剿始于一名警方线人——实为卡利集团秘密效力——泄露了他的藏身地点。'}, {'start': 117.0, 'end': 120.0, 'text': '警方追踪他至卡塔赫纳，但他乘船逃脱，抵达图斯特拉。'}]}, 'SUCCESS', '')
+2025-09-29 11:08:05 - VideoTranslation - INFO - 步骤4: 开始生成SRT字幕...
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 🔄 调用函数: srt_subtitle_handling
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 📥 参数: args=({'segments': [{'start': 0.0, 'end': 9.0, 'text': '安东尼奥·埃泽基尔·卡德纳斯·吉伦，外号“风暴托尼”，在他兄弟OCL被捕后接管了海湾贩毒集团的领导权。'}, {'start': 9.0, 'end': 16.0, 'text': '但与此同时，曾经是该贩毒集团武装力量的Los Zetas（洛斯塞塔斯）已脱离组织，转而成为其最致命的敌人。'}, {'start': 16.0, 'end': 26.0, 'text': '托尼拥有自己的私人军队‘Los Escorpiones’（蝎子部队），这支队伍由前警察组成，接受过重武器和残酷战术训练，手段之凶残引起了墨西哥海军陆战队的注意。'}, {'start': 26.0, 'end': 34.0, 'text': '数月来，军方在塔毛利帕斯州对他展开追捕，曾多次几乎将他抓获，但他每次都借助武装车队和装甲车成功逃脱。'}, {'start': 34.0, 'end': 42.0, 'text': '然而到了2010年底，政府将其抓捕列为头等要务，他的家乡兼大本营马塔莫罗斯市成为主要战场。'}, {'start': 42.0, 'end': 50.0, 'text': '2010年11月5日清晨，超过660名海军陆战队员在直升机和装甲车支援下，包围了马塔莫罗斯市中心。'}, {'start': 51.0, 'end': 59.0, 'text': '道路被封锁，手机信号中断，城市部分地区停电。数小时内，居民因街头公然爆发的枪战而恐惧躲藏。'}, {'start': 59.0, 'end': 67.0, 'text': '海湾贩毒集团的杀手劫持公交车阻截军方车队，狙击手从屋顶开火，交火期间引爆了超过300枚手榴弹。'}, {'start': 67.0, 'end': 74.0, 'text': '到当天下午，海军陆战队已锁定托尼藏身的市中心建筑，直升机在上空火力压制，军队逐步推进。'}, {'start': 74.0, 'end': 83.0, 'text': '突入后，他们击毙了托尼及其多名保镖。随着他死亡的消息传出，塔毛利帕斯州及更广地区爆发新的路障、手榴弹袭击和枪战。'}, {'start': 83.0, 'end': 89.0, 'text': '洛斯塞塔斯公开庆祝，挂起嘲讽海湾贩毒集团的横幅，并邀请托尼的手下叛逃投靠。'}, {'start': 89.0, 'end': 90.0, 'text': '墨西哥人'}, {'start': 90.0, 'end': 98.0, 'text': '到1989年，冈萨洛·罗德里格斯·加查，绰号‘墨西哥人’，已成为麦德林贩毒集团中最令人畏惧的头目之一。'}, {'start': 98.0, 'end': 107.0, 'text': '但那时，他已经与几乎所有势力为敌：哥伦比亚政府、美国缉毒局、卡利贩毒集团、FARC游击队，甚至昔日翡翠贸易中的盟友。'}, {'start': 107.0, 'end': 111.0, 'text': '他的帝国正在瓦解，而他的敌人开始联手将他铲除。'}, {'start': 111.0, 'end': 117.0, 'text': '最终围剿始于一名警方线人——实为卡利集团秘密效力——泄露了他的藏身地点。'}, {'start': 117.0, 'end': 120.0, 'text': '警方追踪他至卡塔赫纳，但他乘船逃脱，抵达图斯特拉。'}]},), kwargs={}
+2025-09-29 11:08:05 - VideoTranslation - INFO - 开始生成SRT字幕: 17个字幕段 -> /root/video-translation/output/subtitles/subtitle_20250929_110805.srt
+2025-09-29 11:08:05 - VideoTranslation - INFO - 📝 字幕生成成功: /root/video-translation/output/subtitles/subtitle_20250929_110805.srt -> 包含 17 个字幕段
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - ✅ 函数 srt_subtitle_handling 执行成功，耗时: 0.000秒
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 📤 返回值: (True, '/root/video-translation/output/subtitles/subtitle_20250929_110805.srt', 'SUCCESS', '')
+2025-09-29 11:08:05 - VideoTranslation - INFO - 步骤5: 开始视频硬烧录...
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 🔄 调用函数: video_hardburn
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 📥 参数: args=('video_test_2min.mp4', '/root/video-translation/output/subtitles/subtitle_20250929_110805.srt'), kwargs={}
+2025-09-29 11:08:05 - VideoTranslation - INFO - 开始视频硬烧录: video_test_2min.mp4 + /root/video-translation/output/subtitles/subtitle_20250929_110805.srt -> /root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4
+2025-09-29 11:08:05 - VideoTranslation - DEBUG - 执行FFmpeg命令: ffmpeg -i video_test_2min.mp4 -vf subtitles='/root/video-translation/output/subtitles/subtitle_20250929_110805.srt':force_style='FontSize=55,PrimaryColour=&HFFFFFF,OutlineColour=&H000000,Outline=2' -c:a copy -c:v libx264 -preset medium -crf 23 -y /root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4
+2025-09-29 11:08:24 - VideoTranslation - INFO - 🎬 视频处理成功: video_test_2min.mp4 -> /root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4 (模式: hard_burned)
+2025-09-29 11:08:24 - VideoTranslation - DEBUG - ✅ 函数 video_hardburn 执行成功，耗时: 19.227秒
+2025-09-29 11:08:24 - VideoTranslation - DEBUG - 📤 返回值: (True, '/root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4', '640x360', 'SUCCESS', '')
+2025-09-29 11:08:24 - VideoTranslation - INFO - 硬烧录模式完成: /root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4
+2025-09-29 11:08:24 - VideoTranslation - INFO - ✅ 翻译任务完成: video_test_2min.mp4 | 耗时: 58.51秒 | 模式: hard_burned
+2025-09-29 11:08:24 - VideoTranslation - INFO - 开始清理缓存文件...
+2025-09-29 11:08:24 - VideoTranslation - DEBUG - 删除缓存文件: /root/video-translation/cache/audio_20250929_110726.wav
+2025-09-29 11:08:24 - VideoTranslation - INFO - 缓存清理完成: 清理了 1 个文件，释放 3.66MB 空间
+2025-09-29 11:08:24 - VideoTranslation - DEBUG - ✅ 函数 translation 执行成功，耗时: 58.509秒
+2025-09-29 11:08:24 - VideoTranslation - DEBUG - 📤 返回值: {'success': True, 'message': '翻译成功', 'processingTime': 58.51, 'inputFile': 'video_test_2min.mp4', 'audioExtracted': True, 'audioDuration': 120.023938, 'whisperHandled': True, 'subtitleExtracted': True, 'subtitleLanguage': {'source': 'auto', 'target': 'zh-CN'}, 'outputMode': 'hard_burned', 'outputVideoPath': '/root/video-translation/output/videos/video_with_subtitles_20250929_110805.mp4', 'videoResolution': '640x360'}
+2025-09-29 11:08:24 - VideoTranslation - INFO - 处理结果已保存到: /root/video-translation/output/result_video_test_2min.json
+2025-09-29 11:08:24 - VideoTranslation - INFO - 视频翻译任务完成

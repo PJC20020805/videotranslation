@@ -1,0 +1,24 @@
+2025-09-29 11:17:56 - VideoTranslation - INFO - 日志系统初始化完成，日志文件: /root/video-translation/logs/video_translation_20250929_111756.log
+2025-09-29 11:17:56 - VideoTranslation - INFO - ============================================================
+2025-09-29 11:17:56 - VideoTranslation - INFO - 🧪 开始测试硬烧录字幕
+2025-09-29 11:17:56 - VideoTranslation - INFO - ============================================================
+2025-09-29 11:17:56 - VideoTranslation - INFO - 📁 输入视频: video_test_2min.mp4
+2025-09-29 11:17:56 - VideoTranslation - INFO - 📏 视频大小: 2.29 MB
+2025-09-29 11:17:56 - VideoTranslation - INFO - 📄 字幕文件: subtitle_20250929_110805.srt
+2025-09-29 11:17:56 - VideoTranslation - INFO - 📏 字幕大小: 2.67 KB
+2025-09-29 11:17:56 - VideoTranslation - INFO - 📂 输出目录: /root/video-translation/test_output
+2025-09-29 11:17:56 - VideoTranslation - INFO - 
+🎬 开始硬烧录测试
+2025-09-29 11:17:56 - VideoTranslation - INFO - ----------------------------------------
+2025-09-29 11:17:56 - VideoTranslation - DEBUG - 🔄 调用函数: video_hardburn
+2025-09-29 11:17:56 - VideoTranslation - DEBUG - 📥 参数: args=(), kwargs={'input_video_path': '/root/video-translation/video_test_2min.mp4', 'srt_file_path': '/root/video-translation/output/subtitles/subtitle_20250929_110805.srt', 'output_video_dir': '/root/video-translation/test_output', 'output_video_name': 'test_hardburned_video_test_2min', 'subtitle_style': None}
+2025-09-29 11:17:56 - VideoTranslation - INFO - 开始视频硬烧录: /root/video-translation/video_test_2min.mp4 + /root/video-translation/output/subtitles/subtitle_20250929_110805.srt -> /root/video-translation/test_output/test_hardburned_video_test_2min.mp4
+2025-09-29 11:17:56 - VideoTranslation - DEBUG - 执行FFmpeg命令: ffmpeg -i /root/video-translation/video_test_2min.mp4 -vf subtitles='/root/video-translation/output/subtitles/subtitle_20250929_110805.srt':force_style='FontSize=55,PrimaryColour=&H000000,OutlineColour=&HFFFFFF,Outline=2' -c:a copy -c:v libx264 -preset medium -crf 23 -y /root/video-translation/test_output/test_hardburned_video_test_2min.mp4
+2025-09-29 11:18:16 - VideoTranslation - INFO - 🎬 视频处理成功: /root/video-translation/video_test_2min.mp4 -> /root/video-translation/test_output/test_hardburned_video_test_2min.mp4 (模式: hard_burned)
+2025-09-29 11:18:16 - VideoTranslation - DEBUG - ✅ 函数 video_hardburn 执行成功，耗时: 19.511秒
+2025-09-29 11:18:16 - VideoTranslation - DEBUG - 📤 返回值: (True, '/root/video-translation/test_output/test_hardburned_video_test_2min.mp4', '640x360', 'SUCCESS', '')
+2025-09-29 11:18:16 - VideoTranslation - INFO - ✅ 硬烧录成功
+2025-09-29 11:18:16 - VideoTranslation - INFO - 🎬 输出视频: test_hardburned_video_test_2min.mp4
+2025-09-29 11:18:16 - VideoTranslation - INFO - 📐 视频分辨率: 640x360
+2025-09-29 11:18:16 - VideoTranslation - INFO - 📏 输出文件大小: 2.13 MB
+2025-09-29 11:18:16 - VideoTranslation - INFO - 🎉 硬烧录测试完成
